@@ -1,0 +1,150 @@
+local hindi = {
+	
+}
+local hindilib = {
+	create = function(instance, parent)
+		local new = Instance.new(instance)
+		new.Parent = parent
+		return new
+	end,
+	readudim2 = function(table1, table2)
+		return UDim2.new(table1[1], table1[2], table2[1], table2[2])
+	end,
+	drag = function(frame)
+		local dragging, start, startpos = false, nil, nil
+		frame.InputBegan:Connect(function(input)
+			if input.UserInputType == Enum.UserInputType.MouseButton1 then
+				dragging = true
+				start = input.Position
+				startpos = frame.Position
+			end
+		end)
+		frame.InputChanged:Connect(function(input)
+			if dragging and input.UserInputType == Enum.UserInputType.MouseMovement then
+				local delta = input.Position - start
+				frame.Position = UDim2.new(startpos.X.Scale, startpos.X.Offset + delta.X, startpos.Y.Scale, startpos.Y.Offset + delta.Y)
+			end
+		end)
+		frame.InputEnded:Connect(function(input)
+			if input.UserInputType == Enum.UserInputType.MouseButton1 then
+				dragging = false
+			end
+		end)
+	end,
+	getplrs = function(box)
+		local tab = {
+			
+		}
+		if box.Text == "me" then
+			return {game:GetService("Players").LocalPlayer}
+		elseif box.Text == "all" then
+			return game:GetService("Players"):GetPlayers()
+		elseif box.Text ~= "me" and box.Text ~= "all" then
+			for datamodel, plr in pairs(game:GetService("Players"):GetPlayers()) do
+				if string.find(plr.Name:lower(), box.Text) == true then
+					table.insert(tab, plr)
+				end
+			end
+		end
+		return tab
+	end,
+}
+local rotate = false
+local stand = true
+local jump = false
+local hindihax = Instance.new("ScreenGui", game:GetService("Players").LocalPlayer.PlayerGui)
+for datamodel, remote in pairs(game:GetDescendants()) do
+	if remote:IsA("RemoteEvent") and remote.Name == "ConfigHumanoid" then
+		table.insert(hindi, remote)
+	end
+end
+local container = hindilib.create("ImageLabel", hindihax)
+container.Size = hindilib.readudim2({0, 413},{0, 612})
+container.Position = hindilib.readudim2({0.562, 0},{0.117, 0})
+container.Image = "http://www.roblox.com/asset/?id=437751226"
+hindilib.drag(container)
+local title = hindilib.create("TextLabel", container)
+title.Size = hindilib.readudim2({0, 413},{0, 45})
+title.Position = hindilib.readudim2({0, 0},{0, 0})
+title.BackgroundColor3 = Color3.new(1, 1, 1)
+title.Text = [[
+
+हैक स्क्रिप्ट builderboy256 and spark]]
+title.Font = Enum.Font.SourceSans
+title.TextScaled = true
+local jumptext = hindilib.create("TextLabel", container)
+jumptext.Size = hindilib.readudim2({0, 200},{0, 50})
+jumptext.Position = hindilib.readudim2({0.019, 0},{0.606, 0})
+jumptext.BackgroundColor3 = Color3.new(1, 1, 1)
+jumptext.Text = "jump                                                      :"
+jumptext.Font = Enum.Font.SourceSans
+jumptext.TextScaled = true
+local rotatetext = hindilib.create("TextLabel", container)
+rotatetext.Size = hindilib.readudim2({0, 200},{0, 50})
+rotatetext.Position = hindilib.readudim2({0.019, 0},{0.309, 0})
+rotatetext.BackgroundColor3 = Color3.new(1, 1, 1)
+rotatetext.Text = "autrootate :"
+rotatetext.Font = Enum.Font.SourceSans
+rotatetext.TextScaled = true
+local standtext = hindilib.create("TextLabel", container)
+standtext.Size = hindilib.readudim2({0, 200},{0, 50})
+standtext.Position = hindilib.readudim2({0.019, 0},{0.459, 0})
+standtext.BackgroundColor3 = Color3.new(1, 1, 1)
+standtext.Text = "platiformsatnd:"
+standtext.Font = Enum.Font.SourceSans
+standtext.TextScaled = true
+local jumptoggle = hindilib.create("TextButton", container)
+jumptoggle.Size = hindilib.readudim2({0, 200},{0, 50})
+jumptoggle.Position = hindilib.readudim2({0.516, 0},{0.606, 0})
+jumptoggle.BackgroundColor3 = Color3.new(1, 1, 1)
+jumptoggle.Text = "false"
+jumptoggle.Font = Enum.Font.SourceSans
+jumptoggle.TextScaled = true
+jumptoggle.MouseButton1Down:Connect(function()
+	jump = not jump
+	jumptoggle.Text = tostring(jump)
+end)
+local rotatetoggle = hindilib.create("TextButton", container)
+rotatetoggle.Size = hindilib.readudim2({0, 200},{0, 50})
+rotatetoggle.Position = hindilib.readudim2({0.516, 0},{0.309, 0})
+rotatetoggle.BackgroundColor3 = Color3.new(1, 1, 1)
+rotatetoggle.Text = "false"
+rotatetoggle.Font = Enum.Font.SourceSans
+rotatetoggle.TextScaled = true
+rotatetoggle.MouseButton1Down:Connect(function()
+	rotate = not rotate
+	rotatetoggle.Text = tostring(rotate)
+end)
+local standtoggle = hindilib.create("TextButton", container)
+standtoggle.Size = hindilib.readudim2({0, 200},{0, 50})
+standtoggle.Position = hindilib.readudim2({0.516, 0},{0.459, 0})
+standtoggle.BackgroundColor3 = Color3.new(1, 1, 1)
+standtoggle.Text = "true"
+standtoggle.Font = Enum.Font.SourceSans
+standtoggle.TextScaled = true
+standtoggle.MouseButton1Down:Connect(function()
+	stand = not stand
+	standtoggle.Text = tostring(stand)
+end)
+local namebox = hindilib.create("TextBox", container)
+namebox.Size = hindilib.readudim2({0, 200},{0, 50})
+namebox.Position = hindilib.readudim2({0.257, 0},{0.753, 0})
+namebox.BackgroundColor3 = Color3.new(1, 1, 1)
+namebox.Text = "RX"
+namebox.Font = Enum.Font.SourceSans
+namebox.TextScaled = true
+local doit = hindilib.create("TextButton", container)
+doit.Size = hindilib.readudim2({0, 200},{0, 50})
+doit.Position = hindilib.readudim2({0.257, 0},{0.902, 0})
+doit.BackgroundColor3 = Color3.new(1, 1, 1)
+doit.Text = "Do"
+doit.Font = Enum.Font.SourceSans
+doit.TextScaled = true
+doit.MouseButton1Down:Connect(function()
+	for segway, remote in pairs(hindi) do
+		local plrs = hindilib.getplrs(namebox)
+		for game, plr in pairs(plrs) do
+			remote:FireServer(plr.Character:FindFirstChildOfClass("Humanoid"), stand, jump, rotate)
+		end
+	end
+end)
